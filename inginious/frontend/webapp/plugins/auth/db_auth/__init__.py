@@ -311,7 +311,7 @@ class ProfilePage(INGIniousAuthPage):
 
             all_courses = self.course_factory.get_all_courses()
 
-            for courseid, course in all_courses.items():
+            for courseid, course in list(all_courses.items()):
                 if self.user_manager.course_is_open_to_user(course, username):
                     self.user_manager.course_unregister_user(course, username)
 

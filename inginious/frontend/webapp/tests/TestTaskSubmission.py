@@ -41,7 +41,7 @@ class TestTaskSubmission(LoggedInTest):
         else:
             self.fail("time out")
         print("-----------------Done-----------------")
-        print(driver.find_element_by_xpath("//div[@id='task_alert']/div").text)
+        print((driver.find_element_by_xpath("//div[@id='task_alert']/div").text))
         self.assertEqual("You solved this difficult task!", driver.find_element_by_xpath("//div[@id='task_alert']/div/p").text)
         self.assertEqual("100.0", driver.find_element_by_id("task_grade").text)
         self.assertEqual("Succeeded", driver.find_element_by_id("task_status").text)

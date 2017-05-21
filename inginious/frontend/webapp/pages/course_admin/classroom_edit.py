@@ -72,7 +72,7 @@ class CourseEditClassroom(INGIniousAdminPage):
 
         students, groups, errored_students = [], [], []
 
-        new_data["students"] = map(str.strip, new_data["students"])
+        new_data["students"] = list(map(str.strip, new_data["students"]))
 
         # Check the students
         for student in new_data["students"]:

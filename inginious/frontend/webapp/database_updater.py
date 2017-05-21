@@ -97,7 +97,7 @@ def update_database(database, gridfs, course_factory, user_manager):  # pylint: 
             classrooms[group["course_id"]]["groups"].append({"size": group["size"], "students": group["users"]})
             classrooms[group["course_id"]]["tutors"] = classrooms[group["course_id"]]["tutors"].union(group["tutors"])
 
-        for classroom in classrooms.values():
+        for classroom in list(classrooms.values()):
             classroom["tutors"] = list(classroom["tutors"])
             database.classrooms.insert(classroom)
 

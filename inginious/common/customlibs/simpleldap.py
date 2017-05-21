@@ -67,10 +67,10 @@ class cidict(dict):
         return super(cidict, self).get(key.lower(), *args, **kwargs)
 
     def keys(self):
-        return self._keys.values()
+        return list(self._keys.values())
 
     def items(self):
-        return [(k, self[k]) for k in self.keys()]
+        return [(k, self[k]) for k in list(self.keys())]
 
 #
 # Exceptions.
@@ -115,7 +115,7 @@ class LDAPItem(cidict):
         self.dn, self.attributes = result
         # XXX: quick and dirty, should really proxy straight to the existing
         # self.attributes dict.
-        for attribute, values in self.attributes.items():
+        for attribute, values in list(self.attributes.items()):
             # Make the entire list of values for each LDAP attribute
             # accessible through a dictionary mapping.
             self[attribute] = values
@@ -143,7 +143,7 @@ class LDAPItem(cidict):
         Attribute names are displayed right-aligned to the length of the
         longest attribute name.
         """
-        attributes = self.keys()
+        attributes = list(self.keys())
         longestKeyLength = max([len(attr) for attr in attributes])
         output = []
         for attr in sorted(attributes):
@@ -233,7 +233,7 @@ class Connection(object):
         else:
             self.connection = ldap.initialize(uri)
         if options:
-            for name, value in options.items():
+            for name, value in list(options.items()):
                 self.connection.set_option(getattr(ldap, name), value)
         if encryption == 'tls':
             self.connection.start_tls_s()

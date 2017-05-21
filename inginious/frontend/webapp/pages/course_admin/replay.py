@@ -33,7 +33,7 @@ class CourseReplaySubmissions(INGIniousSubmissionAdminPage):
             error = False
             msg = "Selected submissions were set for replay."
             for i in user_input.tasks:
-                if i not in tasks.keys():
+                if i not in list(tasks.keys()):
                     msg = "Task with id " + i + " does not exist !"
                     error = True
 

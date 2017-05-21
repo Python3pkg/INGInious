@@ -39,7 +39,7 @@ class DockerInterface(object):
 
         # Then, we keep only the last version of each name
         latest = {}
-        for img_id, img_c in images.items():
+        for img_id, img_c in list(images.items()):
             if img_c["title"] not in latest or latest[img_c["title"]]["created"] < img_c["created"]:
                 latest[img_c["title"]] = {"id": img_id, "created": img_c["created"]}
         return latest
@@ -66,13 +66,13 @@ class DockerInterface(object):
 
         # Then, we keep only the last version of each name
         latest = {}
-        for img_id, img_c in images.items():
+        for img_id, img_c in list(images.items()):
             if img_c["title"] not in latest or latest[img_c["title"]]["created"] < img_c["created"]:
                 latest[img_c["title"]] = {"id": img_id, "created": img_c["created"], "labels": img_c["labels"]}
 
         # Now, we parse the labels
         parsed = {}
-        for img_title, img_content in latest.items():
+        for img_title, img_content in list(latest.items()):
             data = img_content["labels"]
             description = data["org.inginious.batch.description"] if "org.inginious.batch.description" in data else ""
 

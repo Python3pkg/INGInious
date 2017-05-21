@@ -114,7 +114,7 @@ class CourseAggregationListPage(INGIniousAdminPage):
                 aggregations[aggregation['_id']]["done"] += 1 if c["done"] else 0
 
         my_aggregations, other_aggregations = [], []
-        for aggregation in aggregations.values():
+        for aggregation in list(aggregations.values()):
             if self.user_manager.session_username() in aggregation["tutors"]:
                 my_aggregations.append(aggregation)
             else:

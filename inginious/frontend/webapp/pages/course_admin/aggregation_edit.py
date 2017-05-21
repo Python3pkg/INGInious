@@ -54,7 +54,7 @@ class CourseEditAggregation(INGIniousAdminPage):
 
         if aggregationid:
             # Order the non-registered students
-            other_students = [student_list[entry]['students'] for entry in student_list.keys() if
+            other_students = [student_list[entry]['students'] for entry in list(student_list.keys()) if
                               not student_list[entry]['classroom'] == ObjectId(aggregationid)]
             other_students = sorted(other_students, key=lambda val: (("0"+users_info[val][0]) if users_info[val] else ("1"+val)))
 

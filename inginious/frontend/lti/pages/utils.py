@@ -227,7 +227,7 @@ class LTILaunchPage(LTIPage, metaclass=abc.ABCMeta):
         self.logger.debug('_parse_lti_data:' + str(post_input))
 
         # Parse consumer list and keep allowed consumers for the course
-        authorized_consumers = dict([(key, consumer) for key, consumer in self.consumers.items() if
+        authorized_consumers = dict([(key, consumer) for key, consumer in list(self.consumers.items()) if
                                      courseid in consumer.get("courses", courseid)])
         try:
             verified = verify_request_common(authorized_consumers, web.ctx.home + web.ctx.fullpath, "POST", {}, post_input)

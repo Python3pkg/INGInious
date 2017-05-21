@@ -16,7 +16,7 @@ Python 3-compatible version of PyLTI. To be dropped once they accept our PR.
 source: https://github.com/mitodl/pylti
 """
 
-from __future__ import absolute_import
+
 
 import logging
 
@@ -52,16 +52,16 @@ LTI_PROPERTY_LIST = [
 ]
 
 LTI_ROLES = {
-    u'staff': [u'Administrator', u'Instructor', ],
-    u'instructor': [u'Instructor', ],
-    u'administrator': [u'Administrator', ],
-    u'student': [u'Student', u'Learner', ]
+    'staff': ['Administrator', 'Instructor', ],
+    'instructor': ['Instructor', ],
+    'administrator': ['Administrator', ],
+    'student': ['Student', 'Learner', ]
     # There is also a special role u'any' that ignores role check
 }
 
-LTI_SESSION_KEY = u'lti_authenticated'
+LTI_SESSION_KEY = 'lti_authenticated'
 
-LTI_REQUEST_TYPE = [u'any', u'initial', u'session']
+LTI_REQUEST_TYPE = ['any', 'initial', 'session']
 
 
 class LTIOAuthServer(oauth2.Server):
@@ -329,9 +329,9 @@ def generate_request_xml(message_identifier_id, operation,
     :param score:
     :return: XML string
     """
-    root = etree.Element(u'imsx_POXEnvelopeRequest',
-                         xmlns=u'http://www.imsglobal.org/services/'
-                               u'ltiv1p1/xsd/imsoms_v1p0')
+    root = etree.Element('imsx_POXEnvelopeRequest',
+                         xmlns='http://www.imsglobal.org/services/'
+                               'ltiv1p1/xsd/imsoms_v1p0')
 
     header = etree.SubElement(root, 'imsx_POXHeader')
     header_info = etree.SubElement(header, 'imsx_POXRequestHeaderInfo')
@@ -413,7 +413,7 @@ class Request_Fix_Duplicate(oauth2.Request):
         Return a string that contains the parameters that must be signed.
         """
         items = []
-        for key, value in self.items():
+        for key, value in list(self.items()):
             if key == 'oauth_signature':
                 continue
             # 1.0a/9.1.1 states that kvp must be sorted by key, then by value,
@@ -440,7 +440,7 @@ class Request_Fix_Duplicate(oauth2.Request):
 
         # Include any query string parameters from the provided URL
         query = urlparse(self.url)[4]
-        url_items = self._split_url_string(query).items()
+        url_items = list(self._split_url_string(query).items())
         url_items = [
             (oauth2.to_utf8(k), oauth2.to_utf8_optional_iterator(v))
             for k, v in url_items if k != 'oauth_signature'

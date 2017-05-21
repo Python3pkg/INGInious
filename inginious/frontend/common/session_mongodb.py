@@ -67,7 +67,7 @@ def needs_encode(obj):
         return any(needs_encode(i) for i in obj)
     if obtype is dict:
         return any(type(k) not in valid_key_types or needs_encode(v)
-                   for (k, v) in obj.items())
+                   for (k, v) in list(obj.items()))
     return True
 
 
@@ -88,11 +88,11 @@ class MongoStore(Store):
 
     def encode(self, sessiondict):
         return dict((k, Binary(Store.encode(self, v), USER_DEFINED_SUBTYPE) if needs_encode(v) else v)
-                    for (k, v) in sessiondict.items())
+                    for (k, v) in list(sessiondict.items()))
 
     def decode(self, sessiondict):
         return dict((k, Store.decode(self, v) if isinstance(v, Binary) and v.subtype == USER_DEFINED_SUBTYPE else v)
-                    for (k, v) in sessiondict.items())
+                    for (k, v) in list(sessiondict.items()))
 
     def __contains__(self, sessionid):
         return bool(self.collection.find_one({_id: sessionid}))

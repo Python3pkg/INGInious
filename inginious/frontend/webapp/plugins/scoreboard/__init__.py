@@ -62,7 +62,7 @@ class ScoreBoard(INGIniousAuthPage):
         if isinstance(scoreboard_content, list):
             scoreboard_content = OrderedDict([(entry, 1) for entry in scoreboard_content])
         if not isinstance(scoreboard_content, OrderedDict):
-            scoreboard_content = OrderedDict(iter(scoreboard_content.items()))
+            scoreboard_content = OrderedDict(iter(list(scoreboard_content.items())))
 
         # Get task names
         task_names = {}
@@ -111,15 +111,15 @@ class ScoreBoard(INGIniousAuthPage):
 
         # Get user names
         users_realname = {}
-        for username, userinfo in self.user_manager.get_users_info(users).items():
+        for username, userinfo in list(self.user_manager.get_users_info(users).items()):
             users_realname[username] = userinfo[0] if userinfo else username
 
         # Compute overall result per user, and sort them
         overall_result_per_user = {}
-        for key, val in result_per_user.items():
+        for key, val in list(result_per_user.items()):
             total = 0
             solved = 0
-            for taskid, coef in scoreboard_content.items():
+            for taskid, coef in list(scoreboard_content.items()):
                 if taskid in val:
                     total += val[taskid]*coef
                     solved += 1

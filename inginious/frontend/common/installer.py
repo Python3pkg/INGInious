@@ -40,34 +40,34 @@ class Installer(object, metaclass=abc.ABCMeta):
     def _display_header(self, title):
         """ Displays an header in the console """
         print("")
-        print(BOLD + HEADER + "--- " + title + " ---" + ENDC)
+        print((BOLD + HEADER + "--- " + title + " ---" + ENDC))
 
     def _display_warning(self, content):
         """ Displays a warning in the console """
-        print(WARNING + "(WARN) " + content + ENDC)
+        print((WARNING + "(WARN) " + content + ENDC))
 
     def _display_info(self, content):
         """ Displays an info message in the console """
-        print(INFO + "(INFO) " + content + ENDC)
+        print((INFO + "(INFO) " + content + ENDC))
 
     def _display_question(self, content):
         """ Displays a preamble to a question """
-        print(DOC + content + ENDC)
+        print((DOC + content + ENDC))
 
     def _display_error(self, content):
         """ Displays an error """
-        print(WHITE + BACKGROUND_RED + "(ERROR) " + content + ENDC)
+        print((WHITE + BACKGROUND_RED + "(ERROR) " + content + ENDC))
 
     def _display_big_warning(self, content):
         """ Displays a BIG warning """
         print("")
-        print(BOLD + WARNING + "--- WARNING ---" + ENDC)
-        print(WARNING + content + ENDC)
+        print((BOLD + WARNING + "--- WARNING ---" + ENDC))
+        print((WARNING + content + ENDC))
         print("")
 
     def _ask_with_default(self, question, default):
         default = str(default)
-        answer = input(DOC + UNDERLINE + question + " [" + default + "]:" + ENDC + " ")
+        answer = eval(input(DOC + UNDERLINE + question + " [" + default + "]:" + ENDC + " "))
         if answer == "":
             answer = default
         return answer
@@ -132,7 +132,7 @@ class Installer(object, metaclass=abc.ABCMeta):
             self._display_info("Successfully written the configuration file")
         except:
             self._display_error("Cannot write the configuration file on disk. Here is the content of the file")
-            print(yaml.dump(options))
+            print((yaml.dump(options)))
 
     @abc.abstractmethod
     def frontend_specific_configuration(self, options):

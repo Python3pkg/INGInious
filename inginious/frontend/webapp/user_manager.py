@@ -204,10 +204,10 @@ class UserManager(AbstractUserManager):
             if method.should_cache() is False:
                 infos = method.get_users_info(remaining_users)
                 if infos is not None:
-                    for user, val in infos.items():
+                    for user, val in list(infos.items()):
                         retval[user] = val
 
-        remaining_users = [username for username, val in retval.items() if val is None]
+        remaining_users = [username for username, val in list(retval.items()) if val is None]
         if len(remaining_users) == 0:
             return retval
 
@@ -216,7 +216,7 @@ class UserManager(AbstractUserManager):
         for info in infos:
             retval[info["_id"]] = (info["realname"], info["email"])
 
-        remaining_users = [username for username, val in retval.items() if val is None]
+        remaining_users = [username for username, val in list(retval.items()) if val is None]
         if len(remaining_users) == 0:
             return retval
 
@@ -225,7 +225,7 @@ class UserManager(AbstractUserManager):
             if method.should_cache() is True:
                 infos = method.get_users_info(remaining_users)
                 if infos is not None:
-                    for user, val in infos.items():
+                    for user, val in list(infos.items()):
                         if val is not None:
                             retval[user] = val
                             self._database.user_info_cache.update_one({"_id": user}, {"$set": {"realname": val[0], "email": val[1]}}, upsert=True)
@@ -299,7 +299,7 @@ class UserManager(AbstractUserManager):
             match["username"] = {"$in": usernames}
 
         tasks = course.get_tasks()
-        taskids = tasks.keys()
+        taskids = list(tasks.keys())
         match["taskid"] = {"$in": list(taskids)}
 
         data = list(self._database.user_tasks.aggregate(
@@ -314,7 +314,7 @@ class UserManager(AbstractUserManager):
                 }}
             ]))
 
-        student_visible_taskids = [taskid for taskid, task in tasks.items() if task.get_accessible_time().after_start()]
+        student_visible_taskids = [taskid for taskid, task in list(tasks.items()) if task.get_accessible_time().after_start()]
         course_staff = course.get_staff()
         retval = {username: {"task_succeeded": 0, "task_grades": [], "grade": 0} for username in usernames}
 

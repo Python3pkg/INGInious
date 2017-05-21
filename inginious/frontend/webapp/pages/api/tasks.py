@@ -23,7 +23,7 @@ class APITasks(APIAuthenticatedPage):
                 val[key] = self._check_for_parsable_text(val2)
             return val
         if isinstance(val, dict):
-            for key, val2 in val.items():
+            for key, val2 in list(val.items()):
                 val[key] = self._check_for_parsable_text(val2)
         return val
 
@@ -73,7 +73,7 @@ class APITasks(APIAuthenticatedPage):
                 raise APINotFound("Task not found")
 
         output = []
-        for taskid, task in tasks.items():
+        for taskid, task in list(tasks.items()):
             task_cache = self.user_manager.get_task_cache(self.user_manager.session_username(), task.get_course_id(), task.get_id())
 
             data = {

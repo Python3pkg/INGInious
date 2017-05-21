@@ -55,7 +55,7 @@ class CoursePage(INGIniousAuthPage):
 
             tasks_score = [0.0, 0.0]
 
-            for taskid, task in tasks.items():
+            for taskid, task in list(tasks.items()):
                 tasks_data[taskid] = {"visible": task.get_accessible_time().after_start() or is_admin, "succeeded": False,
                                       "grade": 0.0}
                 tasks_score[1] += task.get_grading_weight() if tasks_data[taskid]["visible"] else 0

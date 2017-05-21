@@ -437,7 +437,7 @@ class SubmissionManager(object, metaclass=ABCMeta):
 
                     # If there files that were uploaded by the student, add them
                     if submission['input'] is not None:
-                        for pid, problem in submission['input'].items():
+                        for pid, problem in list(submission['input'].items()):
                             # If problem is a dict, it is a file (from the specification of the problems)
                             if isinstance(problem, dict):
                                 # Get the extension (match extensions with more than one dot too)

@@ -137,7 +137,7 @@ class ContestScoreboard(INGIniousAuthPage):
         # Compute ranking
         old = None
         current_rank = 0
-        for cid, user in enumerate(results.keys()):
+        for cid, user in enumerate(list(results.keys())):
             if results[user]["score"] != old:
                 old = results[user]["score"]
                 current_rank = cid + 1

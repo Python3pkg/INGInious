@@ -166,7 +166,7 @@ class TaskFactory(object):
             raise InvalidNameException("Task with invalid name: " + taskid)
         base_file = os.path.join(self._tasks_directory, courseid, taskid, "task")
 
-        for ext, task_file_manager in self._task_file_managers.items():
+        for ext, task_file_manager in list(self._task_file_managers.items()):
             if os.path.isfile(base_file + "." + ext):
                 return base_file + "." + ext, ext, task_file_manager
 

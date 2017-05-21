@@ -113,7 +113,7 @@ class INGIniousSubmissionAdminPage(INGIniousAdminPage):
         users = OrderedDict(sorted(list(self.user_manager.get_users_info(user_list).items()),
                                    key=lambda k: k[1][0] if k[1] is not None else ""))
         user_data = OrderedDict(
-            [(username, user[0] if user is not None else username) for username, user in users.items()])
+            [(username, user[0] if user is not None else username) for username, user in list(users.items())])
 
         aggregations = self.user_manager.get_course_aggregations(course)
         tutored_aggregations = [str(aggregation["_id"]) for aggregation in aggregations if
@@ -193,14 +193,14 @@ def make_csv(data):
             rval = data[entry]
         todel = []
         toadd = {}
-        for key, val in rval.items():
+        for key, val in list(rval.items()):
             if isinstance(val, dict):
-                for key2, val2 in val.items():
+                for key2, val2 in list(val.items()):
                     toadd[str(key) + "[" + str(key2) + "]"] = val2
                 todel.append(key)
         for k in todel:
             del rval[k]
-        for k, v in toadd.items():
+        for k, v in list(toadd.items()):
             rval[k] = v
 
     # Convert everything to CSV

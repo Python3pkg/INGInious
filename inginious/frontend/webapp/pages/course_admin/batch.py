@@ -96,7 +96,7 @@ class CourseBatchJobCreate(INGIniousAdminPage):
         container_description = ParsableText(metadata[1].encode('utf-8').decode("unicode_escape"), 'rst')
 
         container_args = copy.deepcopy(metadata[2])  # copy it
-        for val in container_args.values():
+        for val in list(container_args.values()):
             if "description" in val:
                 val['description'] = ParsableText(val['description'].encode('utf-8').decode("unicode_escape"), 'rst').parse()
 

@@ -39,7 +39,7 @@ class CourseTaskInfoPage(INGIniousAdminPage):
                                                    "email": user[1] if user is not None else "",
                                                    "url": self.individual_submission_url_generator(task, username),
                                                    "tried": 0, "grade": 0, "status": "notviewed"})
-                                       for username, user in users.items()])
+                                       for username, user in list(users.items())])
 
         for user in individual_results:
             individual_data[user["username"]]["tried"] = user["tried"]
@@ -90,7 +90,7 @@ class CourseTaskInfoPage(INGIniousAdminPage):
                 aggregation_data[aggregation['_id']]["grade"] = g["grade"]
 
         my_aggregations, other_aggregations = [], []
-        for aggregation in aggregation_data.values():
+        for aggregation in list(aggregation_data.values()):
             if self.user_manager.session_username() in aggregation["tutors"]:
                 my_aggregations.append(aggregation)
             else:
@@ -101,4 +101,4 @@ class CourseTaskInfoPage(INGIniousAdminPage):
         elif "csv" in web.input() and web.input()["csv"] == "aggregations":
             return make_csv(list(aggregation_data.values()))
 
-        return self.template_helper.get_renderer().course_admin.task_info(course, task, individual_data.values(), [my_aggregations, other_aggregations])
+        return self.template_helper.get_renderer().course_admin.task_info(course, task, list(individual_data.values()), [my_aggregations, other_aggregations])

@@ -63,7 +63,7 @@ def init(plugin_manager, course_factory, client, config):
 
         def keep_only_config_return_values(self, job_return):
             """ Keep only some useful return values """
-            return {key: value for key, value in job_return.items() if return_fields.match(key)}
+            return {key: value for key, value in list(job_return.items()) if return_fields.match(key)}
 
         def POST(self):
             """ POST request """
